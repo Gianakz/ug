@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Student Enrollment Form</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Roboto', Arial, sans-serif;
+      background: linear-gradient(120deg, #e0e7ff 0%, #f8fafc 100%);
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      line-height: 1.6;
+      color: #1e293b;
+    }
+
+    .container {
+      max-width: 840px;
+      background: #fff;
+      margin: 40px auto;
+      border-radius: 32px;
+      box-shadow: 0 10px 50px rgba(0,0,0,0.08);
+      padding: 48px 40px;
+    }
+
+    h1 {
+      background: linear-gradient(90deg, #2563eb 0%, #1e40af 100%);
+      color: #fff;
+      padding: 24px 0;
+      text-align: center;
+      border-radius: 20px 20px 0 0;
+      margin: -48px -40px 40px -40px;
+      font-size: 2.4rem;
+      letter-spacing: 1.5px;
+      font-weight: 700;
+    }
+
+    h2 {
+      color: #1e40af;
+      font-size: 1.4rem;
+      border-left: 4px solid #2563eb;
+      padding-left: 12px;
+      margin: 40px 0 16px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: 500;
+      color: #1e293b;
+      font-size: 1rem;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 12px 14px;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      background: #f1f5f9;
+      font-size: 1rem;
+      transition: all 0.2s ease;
+    }
+
+    input:focus, select:focus {
+      border-color: #2563eb;
+      background: #fff;
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
+    }
+
+    .row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 24px;
+    }
+
+    .row > div {
+      flex: 1 1 45%;
+      min-width: 200px;
+    }
+
+    .radio-group {
+      display: flex;
+      gap: 16px;
+      background: #f8fafc;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      padding: 12px 20px;
+      flex-wrap: wrap;
+    }
+
+    .radio-group input {
+      margin-right: 6px;
+    }
+
+    .radio-group label {
+      font-weight: 400;
+      color: #334155;
+      display: flex;
+      align-items: center;
+    }
+
+    .signature-section {
+      margin-top: 32px;
+    }
+
+    .signature-box {
+      margin-top: 8px;
+      border: 2px dashed #94a3b8;
+      border-radius: 12px;
+      height: 80px;
+      background: #f8fafc;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .clear-btn {
+      margin-top: 12px;
+      background: #1e40af;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      padding: 10px 20px;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+
+    .clear-btn:hover {
+      background: #2563eb;
+    }
+
+    .form-navigation {
+      margin-top: 32px;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    #next-btn, #prev-btn, #submit-btn {
+      padding: 10px 20px;
+      font-size: 1rem;
+      border: none;
+      border-radius: 8px;
+      background-color: #1e40af;
+      color: white;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    #next-btn:hover, #prev-btn:hover, #submit-btn:hover {
+      background-color: #2563eb;
+    }
+
+    /* Multi-step form animation */
+    .form-step {
+      display: none;
+      opacity: 0;
+      transform: translateX(20px);
+      transition: all 0.4s ease;
+    }
+
+    .form-step.active {
+      display: block;
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    @media (max-width: 600px) {
+      .container {
+        padding: 24px;
+        margin: 20px auto;
+      }
+
+      h1 {
+        font-size: 1.8rem;
+        padding: 16px 0;
+        margin: -24px -24px 24px -24px;
+      }
+
+      .row {
+        flex-direction: column;
+        gap: 0;
+      }
+
+      .row > div {
+        flex: 1 1 100%;
+      }
+
+      .radio-group {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .form-navigation {
+        flex-direction: column;
+        gap: 12px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Student Enrollment Form</h1>
+    <form id="enrollment-form" autocomplete="off">
+      <!-- Step 1 -->
+      <div class="form-step active">
+        <h2>Student Information</h2>
+        <div class="row">
+          <div>
+            <label for="first-name">First Name</label>
+            <input type="text" id="first-name" placeholder="First Name">
+          </div>
+          <div>
+            <label for="last-name">Last Name</label>
+            <input type="text" id="last-name" placeholder="Last Name">
+          </div>
+        </div>
+
+        <div class="row">
+          <div>
+            <label for="birth-date">Birth Date</label>
+            <input type="date" id="birth-date">
+          </div>
+          <div>
+            <label>Gender</label>
+            <div class="radio-group">
+              <label><input type="radio" name="gender" value="male"> Male</label>
+              <label><input type="radio" name="gender" value="female"> Female</label>
+              <label><input type="radio" name="gender" value="other"> Other</label>
+            </div>
+          </div>
+        </div>
+
+        <label for="address">Address</label>
+        <input type="text" id="address" placeholder="Full Address">
+
+        <div class="row">
+          <div>
+            <label for="student-phone">Contact Number</label>
+            <input type="tel" id="student-phone" placeholder="(000) 000-0000">
+          </div>
+          <div>
+            <label for="student-email">Email Address</label>
+            <input type="email" id="student-email" placeholder="name@example.com">
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 2 -->
+      <div class="form-step">
+        <h2>Parent/Guardian Information</h2>
+        <div class="row">
+          <div>
+            <label for="parent-name">Name</label>
+            <input type="text" id="parent-name" placeholder="Full Name">
+          </div>
+          <div>
+            <label for="relationship">Relationship</label>
+            <input type="text" id="relationship" placeholder="Ex- Father/Mother">
+          </div>
+        </div>
+
+        <div class="row">
+          <div>
+            <label for="parent-phone">Contact Number</label>
+            <input type="tel" id="parent-phone" placeholder="(000) 000-0000">
+          </div>
+          <div>
+            <label for="parent-email">Email Address</label>
+            <input type="email" id="parent-email" placeholder="name@example.com">
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 3 -->
+      <div class="form-step">
+        <h2>Academic Information</h2>
+        <div class="row">
+          <div>
+            <label for="grade">Grade/Program Applying For</label>
+            <input type="text" id="grade" placeholder="Ex- 8th Grade">
+          </div>
+          <div>
+            <label for="previous-school">Previous School</label>
+            <input type="text" id="previous-school" placeholder="Full Name">
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 4 -->
+      <div class="form-step">
+        <h2>Consent and Signature</h2>
+        <p style="margin-bottom: 8px; color:#334155;">
+          I confirm that all information provided above is true to the best of my knowledge.
+        </p>
+
+        <div class="signature-section">
+          <label for="signature">Applicant Signature</label>
+          <div class="signature-box" id="signature"></div>
+          <button type="button" class="clear-btn" id="clear-signature">Clear Signature</button>
+        </div>
+      </div>
+
+      <!-- Navigation Buttons -->
+      <div class="form-navigation">
+        <button type="button" id="prev-btn">Previous</button>
+        <button type="button" id="next-btn">Next</button>
+        <button type="submit" id="submit-btn" style="display: none;">Submit</button>
+      </div>
+    </form>
+  </div>
+
+  <script>
+    // Step logic
+    const steps = document.querySelectorAll('.form-step');
+    const nextBtn = document.getElementById('next-btn');
+    const prevBtn = document.getElementById('prev-btn');
+    const submitBtn = document.getElementById('submit-btn');
+    let currentStep = 0;
+
+    function showStep(step) {
+      steps.forEach((el, i) => {
+        el.classList.toggle('active', i === step);
+      });
+
+      prevBtn.style.display = step === 0 ? 'none' : 'inline-block';
+      nextBtn.style.display = step === steps.length - 1 ? 'none' : 'inline-block';
+      submitBtn.style.display = step === steps.length - 1 ? 'inline-block' : 'none';
+    }
+
+    nextBtn.addEventListener('click', () => {
+      if (currentStep < steps.length - 1) {
+        currentStep++;
+        showStep(currentStep);
+      }
+    });
+
+    prevBtn.addEventListener('click', () => {
+      if (currentStep > 0) {
+        currentStep--;
+        showStep(currentStep);
+      }
+    });
+
+    document.getElementById('enrollment-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      alert('Form submitted!');
+    });
+
+    showStep(currentStep);
+
+    // Signature pad
+    const signatureBox = document.getElementById('signature');
+    const canvas = document.createElement('canvas');
+    let drawing = false;
+    let lastX = 0, lastY = 0;
+
+    function resizeCanvas() {
+      canvas.width = signatureBox.offsetWidth;
+      canvas.height = signatureBox.offsetHeight;
+    }
+
+    resizeCanvas();
+    canvas.style.width = '100%';
+    canvas.style.height = '100%';
+    canvas.style.display = 'block';
+    signatureBox.appendChild(canvas);
+    const ctx = canvas.getContext('2d');
+    ctx.strokeStyle = '#2563eb';
+    ctx.lineWidth = 2;
+
+    function getPos(e) {
+      const rect = canvas.getBoundingClientRect();
+      if (e.touches) {
+        return {
+          x: e.touches[0].clientX - rect.left,
+          y: e.touches[0].clientY - rect.top
+        };
+      } else {
+        return { x: e.offsetX, y: e.offsetY };
+      }
+    }
+
+    function startDraw(e) {
+      drawing = true;
+      const pos = getPos(e);
+      lastX = pos.x;
+      lastY = pos.y;
+    }
+
+    function draw(e) {
+      if (!drawing) return;
+      e.preventDefault();
+      const pos = getPos(e);
+      ctx.beginPath();
+      ctx.moveTo(lastX, lastY);
+      ctx.lineTo(pos.x, pos.y);
+      ctx.stroke();
+      lastX = pos.x;
+      lastY = pos.y;
+    }
+
+    function endDraw(e) {
+      drawing = false;
+      if (e && e.type === 'touchend') e.preventDefault();
+    }
+
+    canvas.addEventListener('mousedown', startDraw);
+    canvas.addEventListener('mousemove', draw);
+    canvas.addEventListener('mouseup', endDraw);
+    canvas.addEventListener('mouseleave', endDraw);
+    canvas.addEventListener('touchstart', startDraw);
+    canvas.addEventListener('touchmove', draw);
+    canvas.addEventListener('touchend', endDraw);
+
+    window.addEventListener('resize', () => {
+      const tempCanvas = document.createElement('canvas');
+      tempCanvas.width = canvas.width;
+      tempCanvas.height = canvas.height;
+      tempCanvas.getContext('2d').drawImage(canvas, 0, 0);
+
+      resizeCanvas();
+      ctx.drawImage(tempCanvas, 0, 0);
+    });
+
+    document.getElementById('clear-signature').onclick = () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+    };
+  </script>
+  <script>
+    document.getElementById('enrollment-form').addEventListener('submit', function(e) {
+  e.preventDefault();
+
+  const formData = {
+    firstName: document.getElementById('first-name').value,
+    lastName: document.getElementById('last-name').value,
+    birthDate: document.getElementById('birth-date').value,
+    gender: document.querySelector('input[name="gender"]:checked')?.value || '',
+    address: document.getElementById('address').value,
+    studentPhone: document.getElementById('student-phone').value,
+    studentEmail: document.getElementById('student-email').value,
+    parentName: document.getElementById('parent-name').value,
+    relationship: document.getElementById('relationship').value,
+    parentPhone: document.getElementById('parent-phone').value,
+    parentEmail: document.getElementById('parent-email').value,
+    grade: document.getElementById('grade').value,
+    previousSchool: document.getElementById('previous-school').value,
+    // You could also serialize the canvas image as base64 if needed
+  };
+
+  fetch('/submit', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(formData)
+  })
+  .then(res => res.json())
+  .then(data => {
+    alert(data.message || 'Submitted!');
+  })
+  .catch(err => {
+    console.error('Error:', err);
+    alert('Something went wrong.');
+  });
+});
+  </script>
+</body>
+</html>
